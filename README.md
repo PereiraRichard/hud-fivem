@@ -111,7 +111,7 @@ Kills, headshots, nível e XP são salvos no computador do jogador e continuam d
 
 ## Prints
 
-> Adicione aqui prints ou um GIF do HUD funcionando no jogo.
+![HUD em jogo](hud-fivem.png)
 
 ## Autor
 
