@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HUD</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-logo="top">
+
+  <div id="hud" class="hud hidden">
+
+    <!-- Vinheta vermelha nas bordas quando a vida esta baixa -->
+    <div id="vignette" class="vignette"></div>
+
+    <!-- Topo: logo no meio e informacoes do servidor no canto direito -->
+    <div class="topbar">
+      <div class="center">
+        <div class="brand">
+          <img id="logo" alt="">
+          <span id="cityName"></span>
+        </div>
+      </div>
+
+      <div id="info" class="panel info hidden">
+        <div class="chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9zm0 2.2c-3.6 0-9 1.8-9 5.3V21h18v-1.5c0-3.5-5.4-5.3-9-5.3z"/></svg><small>ID</small><b id="pid">0</b></div>
+        <div class="chip"><i class="live"></i><small>ONLINE</small><b id="online">0</b></div>
+        <div class="chip" id="pingChip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18h3v3H3zm5-5h3v8H8zm5-5h3v13h-3zm5-5h3v18h-3z"/></svg><small>PING</small><b id="ping">0</b></div>
+      </div>
+    </div>
+
+    <!-- Efeito ao matar (KILL / HEADSHOT) -->
+    <div id="killfx" class="killfx"><div class="k1" id="k1"></div><div class="k2" id="k2"></div></div>
+
+    <!-- Avisos (safe zone, pvp liberado, etc.) -->
+    <div id="notifs" class="notifs"></div>
+
+    <!-- Atalhos (F1, F2, F3) no centro embaixo -->
+    <div id="hotkeys" class="panel hotkeys hidden"></div>
+
+    <!-- Canto inferior direito: tudo do jogador num conjunto so -->
+    <div class="corner">
+
+      <div id="speedo" class="panel speedo hidden">
+        <div class="spd"><b id="spd">0</b><small id="unit">km/h</small></div>
+        <div class="fuel" id="fuelWrap"><span>COMB</span><div class="fb"><i id="fuel"></i></div></div>
+      </div>
+
+      <!-- Kills e tiro na cabeca -->
+      <div class="statrow" id="statRow">
+        <div class="panel stat kills" id="killsBox">
+          <div class="sico"><svg viewBox="0 0 24 24" aria-label="Kills"><path d="M12 2C7.6 2 4 5.4 4 9.6c0 2.4 1.2 4.5 3 5.8V18c0 .6.4 1 1 1h1v2h2v-2h2v2h2v-2h1c.6 0 1-.4 1-1v-2.6c1.8-1.3 3-3.4 3-5.8C20 5.4 16.4 2 12 2zM8.5 12.5a1.8 1.8 0 1 1 0-3.6 1.8 1.8 0 0 1 0 3.6zm7 0a1.8 1.8 0 1 1 0-3.6 1.8 1.8 0 0 1 0 3.6z"/></svg></div>
+          <div class="sv"><b id="kills">0</b><small>KILLS</small></div>
+        </div>
+
+        <div class="panel stat hs" id="hsBox">
+          <div class="ring">
+            <svg class="rg" viewBox="0 0 44 44" aria-hidden="true">
+              <circle class="track" cx="22" cy="22" r="18" fill="none" stroke-width="4"/>
+              <circle class="prog" id="hsRing" cx="22" cy="22" r="18" fill="none" stroke-width="4"/>
+            </svg>
+            <div class="ri"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-label="Headshot"><circle cx="12" cy="12" r="6"/><path d="M12 1.5v5M12 17.5v5M1.5 12h5M17.5 12h5"/></svg></div>
+          </div>
+          <div class="sv"><b id="hsPct">0%</b><small>HEADSHOT</small></div>
+        </div>
+      </div>
+
+      <!-- Armas: 4 slots e a municao da arma na mao -->
+      <div class="panel arsenal">
+        <div class="slots" id="slots">
+          <div class="slot empty"><span class="num">1</span><div class="icon"></div><span class="ammo"></span></div>
+          <div class="slot empty"><span class="num">2</span><div class="icon"></div><span class="ammo"></span></div>
+          <div class="slot empty"><span class="num">3</span><div class="icon"></div><span class="ammo"></span></div>
+          <div class="slot empty"><span class="num">4</span><div class="icon"></div><span class="ammo"></span></div>
+        </div>
+        <div class="ammobox idle" id="ammoBox">
+          <b class="clip" id="clip">–</b>
+          <span class="reserve" id="reserve"></span>
+        </div>
+      </div>
+
+      <!-- Nivel/XP e vida -->
+      <div class="panel status">
+        <div class="bar-row level">
+          <svg class="ico" viewBox="0 0 24 24" aria-label="Nivel"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
+          <span class="lvl"><small>NV</small><b id="level">1</b></span>
+          <div class="bar"><i class="fill" id="xp"></i></div>
+          <b class="val" id="xpN">0/100</b>
+        </div>
+        <div class="bar-row health" id="healthRow">
+          <svg class="ico" viewBox="0 0 24 24" aria-label="Vida"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          <div class="bar"><i class="ghost" id="healthGhost"></i><i class="fill" id="health"></i></div>
+          <b class="val" id="healthN">0</b>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="icons.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
